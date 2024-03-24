@@ -29,9 +29,6 @@ const app = new Vue({
         }
     },
     computed: {
-        sortedItems: function () {
-            return Array.from(this.items).sort((a, b) => b.score - a.score);
-        },
         notVotedPairs: function () {
             return this.pairs.filter(pair => !pair.voted);
         },
@@ -44,24 +41,14 @@ const app = new Vue({
     },
 });
 
-const filechooser = document.querySelector('#filechooser');
+const filereader = document.querySelector('#filereader');
 let images = [];
 
-filechooser.onchange = function () {
-    images.forEach(URL.revokeObjectURL);
-
-    images = Array.from(filechooser.files)
-        .filter(file => /image\/.*/.test(file.type))
-        .map(file => {
-            return {
-                filename: file.name,
-                url: URL.createObjectURL(file)
-            };
-        });
-
-    app.pairs = [];
-    app.items = [];
-    for (const image of images) {
-        app.addItem(image);
+filereader.onclick = function () {
+    for (var i = 0; i <= 1; i++) { // TODO adjust as need for number of images
+        var obj = new Object();
+        obj.filename=`testimg_${i}`; // TODO adjust name
+        obj.url = "photos/testimg_" + i + ".png"; // TODO adjust path, name + suffix
+        app.addItem(obj);
     }
 };

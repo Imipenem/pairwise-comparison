@@ -2,7 +2,6 @@ class Item {
 
     constructor(value, score) {
         this.value = value;
-        this.score = score || 0;
     }
 }
 
@@ -20,7 +19,6 @@ class Pair {
 
     _voteFor(item) {
         if (!this.voted) {
-            item.score++;
             this.winner = item;
             let numbers_1 = this.item1.value.filename.match(/\d+/g);
             let concatenatedNumbers_1 = numbers_1.join("");
