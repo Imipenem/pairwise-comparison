@@ -1,4 +1,4 @@
-const my2DArray = Array.from(Array(4), () => new Array(4).fill(0));
+const results_voted = [];
 // diagonal is initialized with 0 as well, does not matter for this app, can undo it in later analysis
 
 const app = new Vue({
@@ -16,7 +16,7 @@ const app = new Vue({
             this.items.push(newItem);
         },
         download_it: function () {
-            let csvContent = my2DArray.map(row => row.join(',')).join('\n');
+            let csvContent = results_voted.join(',');
             let blob = new Blob([csvContent], {type: 'text/csv'});
 
             // Create a temporary download link
@@ -42,13 +42,24 @@ const app = new Vue({
 });
 
 const filereader = document.querySelector('#filereader');
-let images = [];
+let images = [
+               ["photos/Fuß1_SP_1.png", "photos/Fuß1_SP_2.png"],
+               ["photos/Fuß1_SP_1.png", "photos/Fuß1_SP_3.png"],
+               ["photos/Fuß1_SP_1.png", "photos/Fuß1_SP_4.png"],
+               ["photos/Fuß1_SP_1.png", "photos/Fuß1_SP_5.png"]
+             ];
 
 filereader.onclick = function () {
-    for (var i = 0; i <= 1; i++) { // TODO adjust as need for number of images
-        var obj = new Object();
-        obj.filename=`testimg_${i}`; // TODO adjust name
-        obj.url = "photos/testimg_" + i + ".png"; // TODO adjust path, name + suffix
-        app.addItem(obj);
+    for (var i = 0; i <= 3; i++) { // TODO adjust as need for number of total pairs compared
+        var obj_1 = new Object();
+        var obj_2 = new Object();
+        obj_1.url = images[i][0];
+        obj_2.url = images[i][1];
+
+        const newItem_1 = new Item(obj_1)
+        const newItem_2 = new Item(obj_2);
+
+        app.pairs.push(new Pair(newItem_1, newItem_2));
+
     }
 };
