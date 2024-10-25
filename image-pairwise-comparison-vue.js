@@ -43,14 +43,79 @@ const app = new Vue({
 
 const filereader = document.querySelector('#filereader');
 let images = [
-               ["photos/Fuß1_SP_1.png", "photos/Fuß1_SP_2.png"],
-               ["photos/Fuß1_SP_1.png", "photos/Fuß1_SP_3.png"],
-               ["photos/Fuß1_SP_1.png", "photos/Fuß1_SP_4.png"],
-               ["photos/Fuß1_SP_1.png", "photos/Fuß1_SP_5.png"]
-             ];
+    // H1 pairs
+    ["photos/PCD Q+ UHR>H1.jpg", "photos/PCD Sn>H1.jpg"],
+    ["photos/PCD Q+ UHR>H1.jpg", "photos/PCD Sn UHR>H1.png"],
+    ["photos/PCD Q+ UHR>H1.jpg", "photos/EID DS 2x192 0.4>H1.jpg"],
+    ["photos/PCD Q+ UHR>H1.jpg", "photos/PCD Q+ Xcare>H1.png"],
+    ["photos/PCD Q+ UHR>H1.jpg", "photos/PCD Q+>H1.jpg"],
+    ["photos/PCD Q+ UHR>H1.jpg", "photos/PCD Sn Xcare>H1.png"],
+    ["photos/PCD Sn>H1.jpg", "photos/PCD Sn UHR>H1.png"],
+    ["photos/PCD Sn>H1.jpg", "photos/EID DS 2x192 0.4>H1.jpg"],
+    ["photos/PCD Sn>H1.jpg", "photos/PCD Q+ Xcare>H1.png"],
+    ["photos/PCD Sn>H1.jpg", "photos/PCD Q+>H1.jpg"],
+    ["photos/PCD Sn>H1.jpg", "photos/PCD Sn Xcare>H1.png"],
+    ["photos/PCD Sn UHR>H1.png", "photos/EID DS 2x192 0.4>H1.jpg"],
+    ["photos/PCD Sn UHR>H1.png", "photos/PCD Q+ Xcare>H1.png"],
+    ["photos/PCD Sn UHR>H1.png", "photos/PCD Q+>H1.jpg"],
+    ["photos/PCD Sn UHR>H1.png", "photos/PCD Sn Xcare>H1.png"],
+    ["photos/EID DS 2x192 0.4>H1.jpg", "photos/PCD Q+ Xcare>H1.png"],
+    ["photos/EID DS 2x192 0.4>H1.jpg", "photos/PCD Q+>H1.jpg"],
+    ["photos/EID DS 2x192 0.4>H1.jpg", "photos/PCD Sn Xcare>H1.png"],
+    ["photos/PCD Q+ Xcare>H1.png", "photos/PCD Q+>H1.jpg"],
+    ["photos/PCD Q+ Xcare>H1.png", "photos/PCD Sn Xcare>H1.png"],
+    ["photos/PCD Q+>H1.jpg", "photos/PCD Sn Xcare>H1.png"],
+
+    // H2 pairs
+    ["photos/PCD Q+ UHR>H2.jpg", "photos/PCD Sn UHR>H2.jpg"],
+    ["photos/PCD Q+ UHR>H2.jpg", "photos/EID DS 2x192 0.4 >H2.jpg"],
+    ["photos/PCD Q+ UHR>H2.jpg", "photos/PCD Q+ Xcare>H2.png"],
+    ["photos/PCD Q+ UHR>H2.jpg", "photos/PCD Q+>H2.jpg"],
+    ["photos/PCD Q+ UHR>H2.jpg", "photos/PCD Sn Xcare>H2.png"],
+    ["photos/PCD Q+ UHR>H2.jpg", "photos/PCD Sn>H2.jpg"],
+    ["photos/PCD Sn UHR>H2.jpg", "photos/EID DS 2x192 0.4 >H2.jpg"],
+    ["photos/PCD Sn UHR>H2.jpg", "photos/PCD Q+ Xcare>H2.png"],
+    ["photos/PCD Sn UHR>H2.jpg", "photos/PCD Q+>H2.jpg"],
+    ["photos/PCD Sn UHR>H2.jpg", "photos/PCD Sn Xcare>H2.png"],
+    ["photos/PCD Sn UHR>H2.jpg", "photos/PCD Sn>H2.jpg"],
+    ["photos/EID DS 2x192 0.4 >H2.jpg", "photos/PCD Q+ Xcare>H2.png"],
+    ["photos/EID DS 2x192 0.4 >H2.jpg", "photos/PCD Q+>H2.jpg"],
+    ["photos/EID DS 2x192 0.4 >H2.jpg", "photos/PCD Sn Xcare>H2.png"],
+    ["photos/EID DS 2x192 0.4 >H2.jpg", "photos/PCD Sn>H2.jpg"],
+    ["photos/PCD Q+ Xcare>H2.png", "photos/PCD Q+>H2.jpg"],
+    ["photos/PCD Q+ Xcare>H2.png", "photos/PCD Sn Xcare>H2.png"],
+    ["photos/PCD Q+ Xcare>H2.png", "photos/PCD Sn>H2.jpg"],
+    ["photos/PCD Q+>H2.jpg", "photos/PCD Sn Xcare>H2.png"],
+    ["photos/PCD Q+>H2.jpg", "photos/PCD Sn>H2.jpg"],
+    ["photos/PCD Sn Xcare>H2.png", "photos/PCD Sn>H2.jpg"],
+
+    // H3 pairs
+    ["photos/PCD Q+ UHR>H3.jpg", "photos/PCD Sn>H3.jpg"],
+    ["photos/PCD Q+ UHR>H3.jpg", "photos/PCD Sn UHR>H3.jpg"],
+    ["photos/PCD Q+ UHR>H3.jpg", "photos/EID DS 2x192 0.4 >H3.jpg"],
+    ["photos/PCD Q+ UHR>H3.jpg", "photos/PCD Q+ Xcare>H3.png"],
+    ["photos/PCD Q+ UHR>H3.jpg", "photos/PCD Q+>H3.jpg"],
+    ["photos/PCD Q+ UHR>H3.jpg", "photos/PCD Sn Xcare>H3.png"],
+    ["photos/PCD Sn>H3.jpg", "photos/PCD Sn UHR>H3.jpg"],
+    ["photos/PCD Sn>H3.jpg", "photos/EID DS 2x192 0.4 >H3.jpg"],
+    ["photos/PCD Sn>H3.jpg", "photos/PCD Q+ Xcare>H3.png"],
+    ["photos/PCD Sn>H3.jpg", "photos/PCD Q+>H3.jpg"],
+    ["photos/PCD Sn>H3.jpg", "photos/PCD Sn Xcare>H3.png"],
+    ["photos/PCD Sn UHR>H3.jpg", "photos/EID DS 2x192 0.4 >H3.jpg"],
+    ["photos/PCD Sn UHR>H3.jpg", "photos/PCD Q+ Xcare>H3.png"],
+    ["photos/PCD Sn UHR>H3.jpg", "photos/PCD Q+>H3.jpg"],
+    ["photos/PCD Sn UHR>H3.jpg", "photos/PCD Sn Xcare>H3.png"],
+    ["photos/EID DS 2x192 0.4 >H3.jpg", "photos/PCD Q+ Xcare>H3.png"],
+    ["photos/EID DS 2x192 0.4 >H3.jpg", "photos/PCD Q+>H3.jpg"],
+    ["photos/EID DS 2x192 0.4 >H3.jpg", "photos/PCD Sn Xcare>H3.png"],
+    ["photos/PCD Q+ Xcare>H3.png", "photos/PCD Q+>H3.jpg"],
+    ["photos/PCD Q+ Xcare>H3.png", "photos/PCD Sn Xcare>H3.png"],
+    ["photos/PCD Q+>H3.jpg", "photos/PCD Sn Xcare>H3.png"]
+];
+
 
 filereader.onclick = function () {
-    for (var i = 0; i <= 3; i++) { // TODO adjust as need for number of total pairs compared
+    for (var i = 0; i <= 63; i++) { // TODO adjust as need for number of total pairs compared
         var obj_1 = new Object();
         var obj_2 = new Object();
         obj_1.url = images[i][0];
