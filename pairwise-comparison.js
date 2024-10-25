@@ -2,7 +2,6 @@ class Item {
 
     constructor(value, score) {
         this.value = value;
-        this.score = score || 0;
     }
 }
 
@@ -20,20 +19,19 @@ class Pair {
 
     _voteFor(item) {
         if (!this.voted) {
-            item.score++;
             this.winner = item;
-            let numbers_1 = this.item1.value.filename.match(/\d+/g);
+            /*let numbers_1 = this.item1.value.filename.match(/\d+/g);
             let concatenatedNumbers_1 = numbers_1.join("");
             let parsedInteger_1 = parseInt(concatenatedNumbers_1, 10);
 
             let numbers_2 = this.item2.value.filename.match(/\d+/g);
             let concatenatedNumbers_2 = numbers_2.join("");
-            let parsedInteger_2 = parseInt(concatenatedNumbers_2, 10);
+            let parsedInteger_2 = parseInt(concatenatedNumbers_2, 10);*/
 
             if (this.isItem1Winner()) {
-                my2DArray[parsedInteger_1][parsedInteger_2] = 1; // row is winner, col lost so [1][0] = 1 means img 2 > img 1
+                results_voted.push(1); // first item is winner so push 1 else 0 (first item -> first element of the pair)
             } else {
-                my2DArray[parsedInteger_2][parsedInteger_1] = 1;
+                results_voted.push(0)
             }
         }
     }

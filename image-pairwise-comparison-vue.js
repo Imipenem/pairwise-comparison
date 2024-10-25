@@ -1,4 +1,4 @@
-const my2DArray = Array.from(Array(4), () => new Array(4).fill(0));
+const results_voted = [];
 // diagonal is initialized with 0 as well, does not matter for this app, can undo it in later analysis
 
 const app = new Vue({
@@ -16,7 +16,7 @@ const app = new Vue({
             this.items.push(newItem);
         },
         download_it: function () {
-            let csvContent = my2DArray.map(row => row.join(',')).join('\n');
+            let csvContent = results_voted.join(',');
             let blob = new Blob([csvContent], {type: 'text/csv'});
 
             // Create a temporary download link
@@ -29,9 +29,6 @@ const app = new Vue({
         }
     },
     computed: {
-        sortedItems: function () {
-            return Array.from(this.items).sort((a, b) => b.score - a.score);
-        },
         notVotedPairs: function () {
             return this.pairs.filter(pair => !pair.voted);
         },
@@ -44,24 +41,90 @@ const app = new Vue({
     },
 });
 
-const filechooser = document.querySelector('#filechooser');
-let images = [];
+const filereader = document.querySelector('#filereader');
+let images = [
+    // H1 pairs
+    ["photos/PCD Q+ UHR>H1.jpg", "photos/PCD Sn>H1.jpg"],
+    ["photos/PCD Q+ UHR>H1.jpg", "photos/PCD Sn UHR>H1.png"],
+    ["photos/PCD Q+ UHR>H1.jpg", "photos/EID DS 2x192 0.4>H1.jpg"],
+    ["photos/PCD Q+ UHR>H1.jpg", "photos/PCD Q+ Xcare>H1.png"],
+    ["photos/PCD Q+ UHR>H1.jpg", "photos/PCD Q+>H1.jpg"],
+    ["photos/PCD Q+ UHR>H1.jpg", "photos/PCD Sn Xcare>H1.png"],
+    ["photos/PCD Sn>H1.jpg", "photos/PCD Sn UHR>H1.png"],
+    ["photos/PCD Sn>H1.jpg", "photos/EID DS 2x192 0.4>H1.jpg"],
+    ["photos/PCD Sn>H1.jpg", "photos/PCD Q+ Xcare>H1.png"],
+    ["photos/PCD Sn>H1.jpg", "photos/PCD Q+>H1.jpg"],
+    ["photos/PCD Sn>H1.jpg", "photos/PCD Sn Xcare>H1.png"],
+    ["photos/PCD Sn UHR>H1.png", "photos/EID DS 2x192 0.4>H1.jpg"],
+    ["photos/PCD Sn UHR>H1.png", "photos/PCD Q+ Xcare>H1.png"],
+    ["photos/PCD Sn UHR>H1.png", "photos/PCD Q+>H1.jpg"],
+    ["photos/PCD Sn UHR>H1.png", "photos/PCD Sn Xcare>H1.png"],
+    ["photos/EID DS 2x192 0.4>H1.jpg", "photos/PCD Q+ Xcare>H1.png"],
+    ["photos/EID DS 2x192 0.4>H1.jpg", "photos/PCD Q+>H1.jpg"],
+    ["photos/EID DS 2x192 0.4>H1.jpg", "photos/PCD Sn Xcare>H1.png"],
+    ["photos/PCD Q+ Xcare>H1.png", "photos/PCD Q+>H1.jpg"],
+    ["photos/PCD Q+ Xcare>H1.png", "photos/PCD Sn Xcare>H1.png"],
+    ["photos/PCD Q+>H1.jpg", "photos/PCD Sn Xcare>H1.png"],
 
-filechooser.onchange = function () {
-    images.forEach(URL.revokeObjectURL);
+    // H2 pairs
+    ["photos/PCD Q+ UHR>H2.jpg", "photos/PCD Sn UHR>H2.jpg"],
+    ["photos/PCD Q+ UHR>H2.jpg", "photos/EID DS 2x192 0.4 >H2.jpg"],
+    ["photos/PCD Q+ UHR>H2.jpg", "photos/PCD Q+ Xcare>H2.png"],
+    ["photos/PCD Q+ UHR>H2.jpg", "photos/PCD Q+>H2.jpg"],
+    ["photos/PCD Q+ UHR>H2.jpg", "photos/PCD Sn Xcare>H2.png"],
+    ["photos/PCD Q+ UHR>H2.jpg", "photos/PCD Sn>H2.jpg"],
+    ["photos/PCD Sn UHR>H2.jpg", "photos/EID DS 2x192 0.4 >H2.jpg"],
+    ["photos/PCD Sn UHR>H2.jpg", "photos/PCD Q+ Xcare>H2.png"],
+    ["photos/PCD Sn UHR>H2.jpg", "photos/PCD Q+>H2.jpg"],
+    ["photos/PCD Sn UHR>H2.jpg", "photos/PCD Sn Xcare>H2.png"],
+    ["photos/PCD Sn UHR>H2.jpg", "photos/PCD Sn>H2.jpg"],
+    ["photos/EID DS 2x192 0.4 >H2.jpg", "photos/PCD Q+ Xcare>H2.png"],
+    ["photos/EID DS 2x192 0.4 >H2.jpg", "photos/PCD Q+>H2.jpg"],
+    ["photos/EID DS 2x192 0.4 >H2.jpg", "photos/PCD Sn Xcare>H2.png"],
+    ["photos/EID DS 2x192 0.4 >H2.jpg", "photos/PCD Sn>H2.jpg"],
+    ["photos/PCD Q+ Xcare>H2.png", "photos/PCD Q+>H2.jpg"],
+    ["photos/PCD Q+ Xcare>H2.png", "photos/PCD Sn Xcare>H2.png"],
+    ["photos/PCD Q+ Xcare>H2.png", "photos/PCD Sn>H2.jpg"],
+    ["photos/PCD Q+>H2.jpg", "photos/PCD Sn Xcare>H2.png"],
+    ["photos/PCD Q+>H2.jpg", "photos/PCD Sn>H2.jpg"],
+    ["photos/PCD Sn Xcare>H2.png", "photos/PCD Sn>H2.jpg"],
 
-    images = Array.from(filechooser.files)
-        .filter(file => /image\/.*/.test(file.type))
-        .map(file => {
-            return {
-                filename: file.name,
-                url: URL.createObjectURL(file)
-            };
-        });
+    // H3 pairs
+    ["photos/PCD Q+ UHR>H3.jpg", "photos/PCD Sn>H3.jpg"],
+    ["photos/PCD Q+ UHR>H3.jpg", "photos/PCD Sn UHR>H3.jpg"],
+    ["photos/PCD Q+ UHR>H3.jpg", "photos/EID DS 2x192 0.4 >H3.jpg"],
+    ["photos/PCD Q+ UHR>H3.jpg", "photos/PCD Q+ Xcare>H3.png"],
+    ["photos/PCD Q+ UHR>H3.jpg", "photos/PCD Q+>H3.jpg"],
+    ["photos/PCD Q+ UHR>H3.jpg", "photos/PCD Sn Xcare>H3.png"],
+    ["photos/PCD Sn>H3.jpg", "photos/PCD Sn UHR>H3.jpg"],
+    ["photos/PCD Sn>H3.jpg", "photos/EID DS 2x192 0.4 >H3.jpg"],
+    ["photos/PCD Sn>H3.jpg", "photos/PCD Q+ Xcare>H3.png"],
+    ["photos/PCD Sn>H3.jpg", "photos/PCD Q+>H3.jpg"],
+    ["photos/PCD Sn>H3.jpg", "photos/PCD Sn Xcare>H3.png"],
+    ["photos/PCD Sn UHR>H3.jpg", "photos/EID DS 2x192 0.4 >H3.jpg"],
+    ["photos/PCD Sn UHR>H3.jpg", "photos/PCD Q+ Xcare>H3.png"],
+    ["photos/PCD Sn UHR>H3.jpg", "photos/PCD Q+>H3.jpg"],
+    ["photos/PCD Sn UHR>H3.jpg", "photos/PCD Sn Xcare>H3.png"],
+    ["photos/EID DS 2x192 0.4 >H3.jpg", "photos/PCD Q+ Xcare>H3.png"],
+    ["photos/EID DS 2x192 0.4 >H3.jpg", "photos/PCD Q+>H3.jpg"],
+    ["photos/EID DS 2x192 0.4 >H3.jpg", "photos/PCD Sn Xcare>H3.png"],
+    ["photos/PCD Q+ Xcare>H3.png", "photos/PCD Q+>H3.jpg"],
+    ["photos/PCD Q+ Xcare>H3.png", "photos/PCD Sn Xcare>H3.png"],
+    ["photos/PCD Q+>H3.jpg", "photos/PCD Sn Xcare>H3.png"]
+];
 
-    app.pairs = [];
-    app.items = [];
-    for (const image of images) {
-        app.addItem(image);
+
+filereader.onclick = function () {
+    for (var i = 0; i <= 63; i++) { // TODO adjust as need for number of total pairs compared
+        var obj_1 = new Object();
+        var obj_2 = new Object();
+        obj_1.url = images[i][0];
+        obj_2.url = images[i][1];
+
+        const newItem_1 = new Item(obj_1)
+        const newItem_2 = new Item(obj_2);
+
+        app.pairs.push(new Pair(newItem_1, newItem_2));
+
     }
 };
